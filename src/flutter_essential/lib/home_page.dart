@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_essential/pages/hello_page1.dart';
+import 'package:flutter_essential/pages/hello_page2.dart';
+import 'package:flutter_essential/pages/hello_page3.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -12,46 +15,112 @@ class HomePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: _body(),
+      body: _body(context),
     );
   }
 
   //Método criado para facilitar visualização e montar o body:
-  _body() {
+  //Está sendo passado o context pra utilizar na Navigation:
+  _body(context) {
     return Container(
-      color: Colors.white,
-      child: Center(
-        child: _button(),
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _text("Page View Example. Roll:"),
+            _pageView(),
+            _buttons(context),
+          ],
+        ));
+  }
+
+  //Carroussel:
+  Container _pageView() {
+    return Container(
+      padding: EdgeInsets.only(top: 20, bottom: 20),
+      height: 300,
+      child: PageView(
+        children: <Widget>[
+          _image("assets/images/dog1.png"),
+          _image("assets/images/dog2.png"),
+          _image("assets/images/dog3.png"),
+          _image("assets/images/dog4.png"),
+          _image("assets/images/dog5.png"),
+        ],
       ),
     );
   }
 
-  _button() {
+  //Está sendo passado o context pra utilizar na Navigation:
+  _buttons(context) {
+    return Column(
+      children: <Widget>[
+        Row(
+          //Deixa os espaços igualmente entre os botões:
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _button(
+                //Quando existem parâmetros a serem passados nos métodos, utilizar a sintaxe abaixo com seta:
+                context,
+                "ListView",
+                () => _onClickNavigator(context, HelloPage1())),
+            _button(context, "Page 2",
+                () => _onClickNavigator(context, HelloPage2())),
+            _button(context, "Page 3",
+                () => _onClickNavigator(context, HelloPage3())),
+          ],
+        ),
+        Row(
+          //Deixa os espaços igualmente entre os botões:
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _button(context, "Snack", _onClickSnack),
+            _button(context, "Dialog", _onClickDialog),
+            _button(context, "Toast", _onClickToast),
+          ],
+        )
+      ],
+    );
+  }
+
+  //Está sendo passado o context pra utilizar na Navigation:
+  _onClickNavigator(BuildContext context, Widget page) {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return page;
+    }));
+  }
+
+  _onClickSnack() {}
+
+  _onClickDialog() {}
+
+  _onClickToast() {}
+
+  //Está sendo passado o context pra utilizar na Navigation:
+  _button(BuildContext context, String strText, Function onPressed) {
     return RaisedButton(
       color: Colors.blue,
       child: Text(
-        "Olá, mundo!",
+        strText,
         style: TextStyle(
           color: Colors.white,
         ),
       ),
-      onPressed: () => _onClickOk(),
+      onPressed: onPressed,
     );
   }
 
-  void _onClickOk() => print("Olá");
-
-  _image() {
+  _image(String strPath) {
     return Image.asset(
-      "assets/images/dog4.png",
+      strPath,
       fit: BoxFit.contain,
     );
   }
 
   //Método criado para facilitar visualização e montar o Text:
-  _text() {
+  _text(String strText) {
     return Text(
-      "Hello, world!",
+      strText,
       style: TextStyle(
           fontSize: 30,
           color: Colors.blue,
@@ -65,6 +134,9 @@ class HomePage extends StatelessWidget {
 }
 
 //Explicações:
+//Scaffold:
+// O Scaffold é um widget que permite adicionar elementos do Material Design de forma simples, como a App Bar, Tabs, Navigation Drawer (menu lateral), Floating Action Button (FAB), etc.
+
 // Child: Utilizados por Widgets que suportam apenas 1 filho, exemplo CENTER.
 // Childres: Utilizados por Widgets que podem receber mais de um filho, exemplo ListView.
 
@@ -97,3 +169,17 @@ class HomePage extends StatelessWidget {
 
 //CrossAxisAlignment:
 // Alinha a coluna ou linha no eixo cruzado.
+
+//PageView:
+//O PageView é um widget que recebe um array de widgets filhos e cria o famoso carrossel.
+
+//Pading:
+// O padding é utilizado para criar um espaçamento dentro do widget. É possível aplicar o padding de 2 maneiras:
+// 1 - Utilizar o widget Container e dentro dele configurar o atributo padding
+// 2 - Utilizar o widget Padding.
+
+//Scroll básico - SingleChildScrollView:
+// O ListView é um dos widgets mais utilizados e é utilizado para criar listas com rolagem.
+
+//Navigator:
+// Utilizado para navegar entre páginas passando context.
