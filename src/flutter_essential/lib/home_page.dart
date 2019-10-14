@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_essential/pages/hello_listview.dart';
 import 'package:flutter_essential/pages/hello_page1.dart';
 import 'package:flutter_essential/pages/hello_page2.dart';
 import 'package:flutter_essential/pages/hello_page3.dart';
+import 'package:flutter_essential/utils/nav.dart';
+import 'package:flutter_essential/widgets/blue_button.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -16,6 +19,20 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
       ),
       body: _body(context),
+      //Menu Lateral:
+      drawer: Container(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Drawer example"),
+            centerTitle: true,
+          ),
+          body: Container(
+            child: Center(
+              child: Text("Hello Drawer"),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -23,15 +40,16 @@ class HomePage extends StatelessWidget {
   //Está sendo passado o context pra utilizar na Navigation:
   _body(context) {
     return Container(
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _text("Page View Example. Roll:"),
-            _pageView(),
-            _buttons(context),
-          ],
-        ));
+      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          _text("Page View Example. Roll:"),
+          _pageView(),
+          _buttons(context),
+        ],
+      ),
+    );
   }
 
   //Carroussel:
@@ -59,35 +77,68 @@ class HomePage extends StatelessWidget {
           //Deixa os espaços igualmente entre os botões:
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            _button(
-                //Quando existem parâmetros a serem passados nos métodos, utilizar a sintaxe abaixo com seta:
-                context,
-                "ListView",
-                () => _onClickNavigator(context, HelloPage1())),
-            _button(context, "Page 2",
-                () => _onClickNavigator(context, HelloPage2())),
-            _button(context, "Page 3",
-                () => _onClickNavigator(context, HelloPage3())),
+            BlueButton("ListView",
+                onPressed: () => _onClickNavigator(context, HelloListView())),
+            BlueButton("Page 2",
+                onPressed: () => _onClickNavigator(context, HelloPage2())),
+            BlueButton("Page 3",
+                onPressed: () => _onClickNavigator(context, HelloPage3())),
           ],
         ),
         Row(
           //Deixa os espaços igualmente entre os botões:
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            _button(context, "Snack", _onClickSnack),
-            _button(context, "Dialog", _onClickDialog),
-            _button(context, "Toast", _onClickToast),
+            BlueButton("Snack", onPressed: () => _onClickSnack),
+            BlueButton("Dialog", onPressed: () => _onClickDialog),
+            BlueButton("Toast", onPressed: () => _onClickToast),
           ],
         )
       ],
     );
   }
 
+  //OLD:
+//  _buttons(context) {
+//    return Column(
+//      children: <Widget>[
+//        Row(
+//          //Deixa os espaços igualmente entre os botões:
+//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//          children: <Widget>[
+//            _button(
+//                //Quando existem parâmetros a serem passados nos métodos, utilizar a sintaxe abaixo com seta:
+//                context,
+//                "ListView",
+//                () => _onClickNavigator(context, HelloPage1())),
+//            _button(context, "Page 2",
+//                () => _onClickNavigator(context, HelloPage2())),
+//            _button(context, "Page 3",
+//                () => _onClickNavigator(context, HelloPage3())),
+//          ],
+//        ),
+//        Row(
+//          //Deixa os espaços igualmente entre os botões:
+//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//          children: <Widget>[
+//            _button(context, "Snack", _onClickSnack),
+//            _button(context, "Dialog", _onClickDialog),
+//            _button(context, "Toast", _onClickToast),
+//          ],
+//        )
+//      ],
+//    );
+//  }
+
   //Está sendo passado o context pra utilizar na Navigation:
-  _onClickNavigator(BuildContext context, Widget page) {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return page;
-    }));
+  _onClickNavigator(BuildContext context, Widget page) async {
+    String s = await push(context, page);
+
+    if (s != null) {
+      print(s);
+    } else {
+      print("nothin to show!");
+    }
   }
 
   _onClickSnack() {}
@@ -97,18 +148,9 @@ class HomePage extends StatelessWidget {
   _onClickToast() {}
 
   //Está sendo passado o context pra utilizar na Navigation:
-  _button(BuildContext context, String strText, Function onPressed) {
-    return RaisedButton(
-      color: Colors.blue,
-      child: Text(
-        strText,
-        style: TextStyle(
-          color: Colors.white,
-        ),
-      ),
-      onPressed: onPressed,
-    );
-  }
+  /*_button(BuildContext context, String strText, Function onPressed) {
+    return BlueButton(strText, onPressed);
+  }*/
 
   _image(String strPath) {
     return Image.asset(
@@ -158,7 +200,7 @@ class HomePage extends StatelessWidget {
 // A descrição do botão sempre irá dentro de um child: Text("Botão").
 
 //Collumn e Row:
-// Column: Vertical ou em baixo do outro.
+// Column: Vertical ou em baixo do outro. Espeficar sempre o height, pois o column não consegue adivinhar o mesmo.
 // Row: Horizontalmente, lado a lado.
 // Ambos vão no lugar do Center e tem children (filhos).
 //MainAxisSize: Define o tamanho da coluna ou linha,
@@ -181,5 +223,17 @@ class HomePage extends StatelessWidget {
 //Scroll básico - SingleChildScrollView:
 // O ListView é um dos widgets mais utilizados e é utilizado para criar listas com rolagem.
 
-//Navigator:
+//Navigator.push:
 // Utilizado para navegar entre páginas passando context.
+
+//Navigator.pop:
+// Voltar pra tela anterior. Exemplo na hello_page2
+
+//Expanded:
+// Vai no lugar do container, utilizado pra preencher espaços disponíveis. Definindo através de peso (flex) a quantidade que cada
+// ocupará no layout.
+
+//ListView:
+// Retorna uma lista de algo.
+// itemExtent: define um tamanho fixo pras células da ListView, ver exemplo em hello_listview.dart
+// .builder: Utilizado pra fazer um ListView dinâmico.

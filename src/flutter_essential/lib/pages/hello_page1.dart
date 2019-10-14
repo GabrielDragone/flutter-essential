@@ -6,6 +6,7 @@ class HelloPage1 extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Page 1"),
+        centerTitle: true,
       ),
     );
   }
