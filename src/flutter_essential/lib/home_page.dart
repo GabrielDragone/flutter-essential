@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_essential/pages/hello_gridview.dart';
 import 'package:flutter_essential/pages/hello_listview.dart';
 import 'package:flutter_essential/pages/hello_page1.dart';
 import 'package:flutter_essential/pages/hello_page2.dart';
@@ -44,7 +45,7 @@ class HomePage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          _text("Page View Example. Roll:"),
+          _text("Page View Example. Roll >>:"),
           _pageView(),
           _buttons(context),
         ],
@@ -79,6 +80,8 @@ class HomePage extends StatelessWidget {
           children: <Widget>[
             BlueButton("ListView",
                 onPressed: () => _onClickNavigator(context, HelloListView())),
+            BlueButton("GridView",
+                onPressed: () => _onClickNavigator(context, HelloGridView())),
             BlueButton("Page 2",
                 onPressed: () => _onClickNavigator(context, HelloPage2())),
             BlueButton("Page 3",
@@ -164,7 +167,7 @@ class HomePage extends StatelessWidget {
     return Text(
       strText,
       style: TextStyle(
-          fontSize: 30,
+          fontSize: 25,
           color: Colors.blue,
           fontStyle: FontStyle.italic,
           fontWeight: FontWeight.bold,
@@ -176,8 +179,19 @@ class HomePage extends StatelessWidget {
 }
 
 //Explicações:
+//StatelessWidget: Widget que não mantém estados.
+//StatefulWidget: Widget que mantém estados, utilizados para redesenhar a página de acordo com dados inseridos.
+//  Utiliza-se o setState(){ variavel = valor}, pra atualizar a variável e redesenhar tela. Exemplo: hello_listview
+
 //Scaffold:
 // O Scaffold é um widget que permite adicionar elementos do Material Design de forma simples, como a App Bar, Tabs, Navigation Drawer (menu lateral), Floating Action Button (FAB), etc.
+
+//AppBar:
+// Deve estar dentro de Scaffold, define a barra superior, junto com seu titulo, ações, drawer, etc.
+// Para definirmos os botões que vão na AppBar, devemos utilizar o atributo actions. Exemplos na hello_listview.
+
+//Text / TextStyle:
+// Widget pra inserir textos e editar o mesmo.
 
 // Child: Utilizados por Widgets que suportam apenas 1 filho, exemplo CENTER.
 // Childres: Utilizados por Widgets que podem receber mais de um filho, exemplo ListView.
@@ -237,3 +251,13 @@ class HomePage extends StatelessWidget {
 // Retorna uma lista de algo.
 // itemExtent: define um tamanho fixo pras células da ListView, ver exemplo em hello_listview.dart
 // .builder: Utilizado pra fazer um ListView dinâmico.
+
+//Stack:
+// Utilizado para colocar um Widget em cima do outro, como se fossem pilhas.
+// Caso queira alterar onde o texto está posicionado dentro da Stack, utilizar um Container e definir o alignment.
+
+//BoxDecoration:
+// Utilizado para decorar o visual de um Container. Envolver o Widget que deseja decorar com um Container.
+
+//GridView:
+// Funciona como se fosse uma listview, só que podemos fazer com que essa tenha mais de 1 coluna. Verificar exemplo na page hello_gridview.
