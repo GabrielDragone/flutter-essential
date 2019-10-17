@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_essential/utils/nav.dart';
+
+import 'dog_page.dart';
 
 class Dog {
   String strNome;
@@ -109,31 +112,37 @@ class _HelloListViewState extends State<HelloListView> {
     //return dogs[index];
     //return _image(dog.strFoto);
 
-    //Stack funciona como se fosse uma pilha, pra colocar um widget em cima do outro:
-    return Stack(
-      fit: StackFit.expand, //Utilizado pra preencher toodo o espaço
-      children: <Widget>[
-        _image(dog.strFoto),
-        //Começa a escrita do texto do nome do dog:
-        Align(
-          alignment: Alignment.topLeft,
-          child: Container(
-            margin: EdgeInsets.all(8),
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.black45,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Text(
-              "Stack " + dog.strNome,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
+    //Envolvemos os Widgets com GestureDetector para conseguirmos colocar eventos de click, tap, doubleClick, etc:
+    return GestureDetector(
+      onTap: () {
+        push(context, DogPage(dog));
+      },
+      //Stack funciona como se fosse uma pilha, pra colocar um widget em cima do outro:
+      child: Stack(
+        fit: StackFit.expand, //Utilizado pra preencher toodo o espaço
+        children: <Widget>[
+          _image(dog.strFoto),
+          //Começa a escrita do texto do nome do dog:
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              margin: EdgeInsets.all(8),
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.black45,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text(
+                "Stack " + dog.strNome,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
