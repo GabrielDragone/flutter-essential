@@ -92,23 +92,24 @@ class HomePage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         FloatingActionButton(
+          heroTag: "fab1",
           child: Icon(Icons.add),
           backgroundColor: Colors.green,
           onPressed: () {
             _onClickFab("FAB Example: Clicked on Add");
           },
         ),
-        //TODO: Retirado temporariamente, pois estava dando erro para Navegar entre telas:
-//        SizedBox(
-//          width: 8,
-//        ),
-//        FloatingActionButton(
-//          child: Icon(Icons.favorite),
-//          backgroundColor: Colors.red,
-//          onPressed: () {
-//            _onClickFab("FAB: Clicked on Fav");
-//          },
-//        ),
+        SizedBox(
+          width: 8,
+        ),
+        FloatingActionButton(
+          heroTag: "fab2",
+          child: Icon(Icons.favorite),
+          backgroundColor: Colors.red,
+          onPressed: () {
+            _onClickFab("FAB: Clicked on Fav");
+          },
+        ),
       ],
     );
   }
