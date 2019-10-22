@@ -3,6 +3,7 @@ import 'package:flutter_essential/pages/hello_gridview.dart';
 import 'package:flutter_essential/pages/hello_listview.dart';
 import 'package:flutter_essential/pages/hello_page2.dart';
 import 'package:flutter_essential/pages/hello_page3.dart';
+import 'package:flutter_essential/pages/section_5/login_page_s5.dart';
 import 'package:flutter_essential/utils/nav.dart';
 import 'package:flutter_essential/widgets/blue_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -168,7 +169,30 @@ class HomePage extends StatelessWidget {
                 BlueButton("Dialog", onPressed: () => _onClickDialog(context)),
                 BlueButton("Toast", onPressed: _onClickToast),
               ],
-            )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _text("Other Sections:"),
+              ],
+            ),
+            Row(
+              //Deixa os espaços igualmente entre os botões:
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                //Exemplo pra se utilizar com methods que não tem parâmetros:
+                //BlueButton("Snack", onPressed: _onClickSnack),
+                //Exemplo pra se utilizar com methods que tem parâmetros:
+                BlueButton("Sessão 5",
+                    onPressed: () => _onClickNavigator(context, LoginPageS5()),
+                    color: Colors.green),
+                BlueButton("Sessão 6",
+                    onPressed: () => _onClickDialog(context),
+                    color: Colors.green),
+                BlueButton("Sessão 7",
+                    onPressed: _onClickToast, color: Colors.green),
+              ],
+            ),
           ],
         );
       },
@@ -360,6 +384,7 @@ class HomePage extends StatelessWidget {
 //RaisedButton:
 // Sempre colocar o onPressed(). E esse dentro desse estiver null, o botão fica desabilitado.
 // A descrição do botão sempre irá dentro de um child: Text("Botão").
+// Se quisermos aumentar o tamanho do botão, devemos colocá-lo dentro de um Container.
 
 //Collumn e Row:
 // Column: Vertical ou em baixo do outro. Espeficar sempre o height, pois o column não consegue adivinhar o mesmo.
@@ -485,3 +510,17 @@ class HomePage extends StatelessWidget {
 // Devemos envolver o Widget principal da tela(Scaffold) com o widget DefaultTabController e definir seu tamanho (length).
 // E dentro do body, colocar o Widget TabBarView junto com os childres na mesma quantidade do lenght.
 // Exemplo na home_page:
+
+//TextFormField:
+// Utilizado quando queremos criar campos para digitação.
+// Para decorar o mesmo, utilizar decorations.
+// Para ler os dados inseridos nos TFF, temos que criar um atributo chamado controller, esse que receberá um TextEditingController,
+//  Não esquecer de declarar no corpo da Classe as variáveis (create field) do tipo informado acima.
+// keyboardType define o tipo de teclado que vai aparecer quando focado no texto para digitar. Tipo: TextInputType
+// keyBoardApparence define o estilo do teclado, light ou dark.
+// Exemplo em login_page_s5.
+
+//Form:
+// Utilizado para armazenar os estados dos campos de texto e também chamar a validação.
+// Envolvemos o Container dentro do Form.
+// Deverá ter uma key, declarada no corpo da classe para controlar os estados do Form.

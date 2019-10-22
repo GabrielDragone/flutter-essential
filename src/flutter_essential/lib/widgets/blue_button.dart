@@ -11,15 +11,17 @@ class BlueButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      color: color,
-      child: Text(
-        strText,
-        style: TextStyle(
-          color: Colors.white,
+    return Container(
+      child: RaisedButton(
+        color: color,
+        child: Text(
+          strText,
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
+        onPressed: onPressed,
       ),
-      onPressed: onPressed,
     );
   }
 }
