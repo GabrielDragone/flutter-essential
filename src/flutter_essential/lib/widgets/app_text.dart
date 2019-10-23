@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Classe utilizada para montar TextFormFields padrões:
 class AppText extends StatelessWidget {
   //Variáveis:
   String strLabel;

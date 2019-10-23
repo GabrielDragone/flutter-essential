@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_essential/pages/section_5/home_page_s5.dart';
+import 'package:flutter_essential/pages/section_5/login_api.dart';
+import 'package:flutter_essential/pages/section_5/usuario.dart';
+import 'package:flutter_essential/utils/nav.dart';
 import 'package:flutter_essential/widgets/app_text.dart';
 import 'package:flutter_essential/widgets/blue_button.dart';
 
 class LoginPageS5 extends StatefulWidget {
-  //Chave do formulário que controla seus estados:
   @override
   _LoginPageS5State createState() => _LoginPageS5State();
 }
 
 class _LoginPageS5State extends State<LoginPageS5> {
+  //Chave do formulário que controla seus estados:
   final _formKey = GlobalKey<FormState>();
 
+  //Controladores dos TextFormFields da tela:
   final _tLogin = TextEditingController(text: "Gabriel");
-
   final _tSenha = TextEditingController(text: "123");
 
+  //Utilizado para dar foco no campo:
   final _focusSenha = FocusNode();
 
   @override
@@ -75,7 +81,7 @@ class _LoginPageS5State extends State<LoginPageS5> {
     );
   }
 
-  _onClickLogin() {
+  _onClickLogin() async {
     //Valida todos os campos de TextFormField pra verificar se estão preenchidos.
     // Necessário ter o validator em todos os TextFormFields
     bool formOk = _formKey.currentState.validate();
@@ -89,8 +95,22 @@ class _LoginPageS5State extends State<LoginPageS5> {
     String senha = _tSenha.text;
 
     print("Login: $login - Senha: $senha");
+
+    //Declaramos uma variável pra pegar o retorno do requisição do WebService:
+    //bool ok = await LoginApi.login(login, senha); Antigo
+    Usuario user = await LoginApi.login(login, senha);
+
+    //Validamos esse retorno, se estiver Ok, push pra outra tela:
+    //if (ok) { Antigo
+    if (user != null) {
+      print(">>> $user");
+      push(context, HomePageS5());
+    } else {
+      print("Login incorreto!");
+    }
   }
 
+  //Valida se os campos estão digitados:
   String _validateLogin(String strText) {
     if (strText.isEmpty) {
       return "Digite o login!";
@@ -98,12 +118,13 @@ class _LoginPageS5State extends State<LoginPageS5> {
     return null;
   }
 
+  //Valida se os campos estão digitados:
   String _validateSenha(String strSenha) {
     if (strSenha.isEmpty) {
       return "Digite a senha!";
     }
 
-    if (strSenha.length < 5) {
+    if (strSenha.length < 3) {
       return "A senha deve conter pelo menos 5 dígitos!!";
     }
 
