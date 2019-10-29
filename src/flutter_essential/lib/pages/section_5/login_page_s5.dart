@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_essential/pages/section_5/api_response.dart';
 import 'package:flutter_essential/pages/section_5/home_page_s5.dart';
 import 'package:flutter_essential/pages/section_5/login_api.dart';
 import 'package:flutter_essential/pages/section_5/usuario.dart';
+import 'package:flutter_essential/utils/alert.dart';
 import 'package:flutter_essential/utils/nav.dart';
 import 'package:flutter_essential/widgets/app_text.dart';
 import 'package:flutter_essential/widgets/blue_button.dart';
@@ -22,6 +24,8 @@ class _LoginPageS5State extends State<LoginPageS5> {
 
   //Utilizado para dar foco no campo:
   final _focusSenha = FocusNode();
+
+  bool _showProgress = false;
 
   @override
   void initState() {
@@ -74,6 +78,7 @@ class _LoginPageS5State extends State<LoginPageS5> {
             BlueButton(
               "Login",
               onPressed: () => _onClickLogin(),
+              showProgress: _showProgress,
             ),
           ],
         ),
@@ -91,6 +96,11 @@ class _LoginPageS5State extends State<LoginPageS5> {
       return;
     }
 
+    //Faz o CircularProgressIndicator rodar:
+    setState(() {
+      _showProgress = true;
+    });
+
     String login = _tLogin.text;
     String senha = _tSenha.text;
 
@@ -98,16 +108,31 @@ class _LoginPageS5State extends State<LoginPageS5> {
 
     //Declaramos uma variável pra pegar o retorno do requisição do WebService:
     //bool ok = await LoginApi.login(login, senha); Antigo
-    Usuario user = await LoginApi.login(login, senha);
+
+    //Antes da ApiResponse:
+    //Usuario user = await LoginApi.login(login, senha);
+    ApiResponse response = await LoginApi.login(login, senha);
 
     //Validamos esse retorno, se estiver Ok, push pra outra tela:
     //if (ok) { Antigo
-    if (user != null) {
+
+    //Antes da ApiResponse:
+    //if (user != null) {
+    if (response.ok) {
+      Usuario user = response.result;
+
       print(">>> $user");
-      push(context, HomePageS5());
+      push(context, HomePageS5(), replace: true);
     } else {
-      print("Login incorreto!");
+      //Antes da ApiResponse:
+      //print("Login incorreto!");
+      alert(context, "Carros", response.msg);
     }
+
+    //Faz o CircularProgressIndicator parar de rodar:
+    setState(() {
+      _showProgress = false;
+    });
   }
 
   //Valida se os campos estão digitados:

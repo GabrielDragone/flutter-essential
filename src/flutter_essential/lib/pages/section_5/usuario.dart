@@ -21,10 +21,35 @@ class Usuario {
       : login = map["login"],
         nome = map["nome"],
         email = map["email"],
-        token = map["token"];
+        token = map["token"],
+        //Exemplos 1, 2 e 3:
+        //roles = getRoles(map);
+        //Exemplo 4:
+        roles = map["roles"] != null
+            ? map["roles"].map<String>((role) => role.toString()).toList()
+            : null;
 
   @override
   String toString() {
     return 'Usuario{login: $login, nome: $nome, email: $email, token: $token, roles: $roles}';
+  }
+
+  static getRoles(Map<String, dynamic> map) {
+    //Parser de lista:
+    //Exemplo 1:
+    //List list = map["roles"];
+    /*List<String> roles = [];
+    for (String role in list) {
+      roles.add(role);
+    }*/
+
+    //Exemplo 2:
+    //Percorre a lista e permite que seja retornado outra lista no lugar:
+    //List<String> roles = list.map<String>((role) => role.toString()).toList();
+
+    //Exemplo 3:
+    //List<String> roles =
+    //    map["roles"].map<String>((role) => role.toString()).toList();
+    //return roles;
   }
 }

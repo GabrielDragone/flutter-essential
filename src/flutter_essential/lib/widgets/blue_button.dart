@@ -6,20 +6,30 @@ class BlueButton extends StatelessWidget {
   Function onPressed;
   Color color;
 
+  bool showProgress;
+
   BlueButton(this.strText,
-      {@required this.onPressed, this.color = Colors.blue});
+      {@required this.onPressed,
+      this.color = Colors.blue,
+      this.showProgress = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: RaisedButton(
         color: color,
-        child: Text(
-          strText,
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
+        child: showProgress
+            ? Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              )
+            : Text(
+                strText,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
         onPressed: onPressed,
       ),
     );

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_essential/pages/section_5/login_api.dart';
+import 'package:flutter_essential/pages/section_5/login_page_s5.dart';
+import 'package:flutter_essential/utils/nav.dart';
 
 class DrawerList extends StatelessWidget {
   @override
@@ -48,10 +51,7 @@ class DrawerList extends StatelessWidget {
               trailing: Icon(Icons.arrow_forward),
             ),
             ListTile(
-              onTap: () {
-                print("ListTile: Logout");
-                Navigator.pop(context);
-              },
+              onTap: () => _onClickLogout(context),
               leading: Icon(Icons.exit_to_app),
               title: Text("Logout"),
               //subtitle: Text("More informations..."),
@@ -61,5 +61,11 @@ class DrawerList extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _onClickLogout(BuildContext context) {
+    print("ListTile: Logout");
+    Navigator.pop(context);
+    push(context, LoginPageS5(), replace: true);
   }
 }

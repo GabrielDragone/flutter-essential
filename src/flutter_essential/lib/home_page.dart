@@ -7,7 +7,7 @@ import 'package:flutter_essential/pages/section_5/login_page_s5.dart';
 import 'package:flutter_essential/utils/nav.dart';
 import 'package:flutter_essential/widgets/blue_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'drawer_list.dart';
+import 'widgets/drawer_list.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -415,6 +415,9 @@ class HomePage extends StatelessWidget {
 
 //Navigator.pop:
 // Voltar pra tela anterior. Exemplo na hello_page2
+
+//Navigator.replacement:
+// Abre nova tela, mas elimina botão de voltar para a anterior. Utilizado geralmente em telas de login.
 
 //Expanded:
 // Vai no lugar do container, utilizado pra preencher espaços disponíveis. Definindo através de peso (flex) a quantidade que cada
